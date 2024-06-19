@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Travel Roulette</title>
+
+    <title>Metaphor travel helper</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 150vh;
+        width: 100%;
+        background-color: #efdadd;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+    }
+    .roulette-container {
+        position: relative;
+        width: 500px;
+        height: 500px;
+    }
+    canvas {
+        border: 8px solid #333;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: white;
+    }
+   
+    .controls {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .controls button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #c22727;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease;
+        margin: 5px;
+    }
+    .controls button:hover {
+        background-color: #deb617;
+    }
+    .options input {
+        margin: 5px 0;
+        padding: 5px;
+        width: calc(100% - 12px);
+    }
+    .section-buttons {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+    }
+    .section-buttons button {
+        padding: 10px 15px;
+        margin: 0 5px;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: #7d7171;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .section-buttons button:hover {
+        background-color: #deb617;
+    }
+    .result {
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: bold;
+        color: #000000;
+    }
+
+    
+</style>
+</head>
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1 class="text-light"><a href="index.html"><span>Metaphor</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="active " href="index.html">홈</a></li>
+          <li><a href="ready.html"><span>여행 준비</span></i></a>
+        
+           </li>
+          <li><a href="portfolio.html">추천</a></li>
+          <li class="dropdown"><a href="#"><span>콘텐츠</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="blog.html">블로그</a></li>
+              <li><a href="youtube.html">유튜브</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>여행지 가이드</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>아시아</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="1_1.html">몰디브</a></li>
+                  <li><a href="1_2.html">일본</a></li>
+                  <li><a href="1_3.html">태국</a></li>
+                  <li><a href="1_4.html">한국</a></li>
+                  <li><a href="1_5.html">홍콩</a></li>
+                  <li><a href="1_6.html">싱가포르</a></li>
+                  <li><a href="1_7.html">필리핀</a></li>
+                  <li><a href="1_8.html">베트남</a></li>
+                  <li><a href="1_9.html">대만</a></li>
+                  <li><a href="1_10.html">인도</a></li>
+                  <li><a href="1_11.html">말레이시아</a></li>
+                  <li><a href="1_12.html">스리랑카</a></li>
+                  <li><a href="1_13.html">마카오</a></li>
+                  <li><a href="1_14.html">중국</a></li>
+                  <li><a href="1_15.html">인도네시아</a></li>
+                  <li><a href="1_16.html">캄보디아</a></li>
+                  <li><a href="1_17.html">라오스</a></li>
+                  <li><a href="1_18.html">네팔</a></li>
+                  <li><a href="1_19.html">러시아</a></li>
+                </ul>
+              </li>
+              <li class="dropdown"><a href="#"><span>유럽</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="2_1.html">오스트리아</a></li>
+                  <li><a href="2_2.html">벨기에</a></li>
+                  <li><a href="2_3.html">불가리아</a></li>
+                  <li><a href="2_4.html">크로아티아</a></li>
+                  <li><a href="2_5.html">체코</a></li>
+                  <li><a href="2_6.html">덴마크</a></li>
+                  <li><a href="2_7.html">프랑스</a></li>
+                  <li><a href="2_8.html">독일</a></li>
+                  <li><a href="2_9.html">헝가리</a></li>
+                  <li><a href="2_10.html">아이슬란드</a></li>
+                  <li><a href="2_11.html">이탈리아</a></li>
+                  <li><a href="2_12.html">룩셈부르크</a></li>
+                  <li><a href="2_13.html">네덜란드</a></li>
+                  <li><a href="2_14.html">노르웨이</a></li>
+                  <li><a href="2_15.html">포르투갈</a></li>
+                  <li><a href="2_16.html">스페인</a></li>
+                  <li><a href="2_17.html">스위스</a></li>
+                  <li><a href="2_18.html">영국</a></li>
+                  <li><a href="2_19.html">튀르키예</a></li>
+                </ul>
+              </li>
+              <li class="dropdown"><a href="#"><span>아프리카</span><i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="3_1.html">모리셔스</a></li>
+                  <li><a href="3_2.html">모로코</a></li>
+                  <li><a href="3_3.html">세이셸</a></li>
+                  <li><a href="3_4.html">이집트</a></li>
+                  <li><a href="3_5.html">레위니옹</a></li>
+                  <li><a href="3_6.html">남아프리카공화국</a></li>
+                  <li><a href="3_7.html">마다가스카르</a></li>
+                  <li><a href="3_8.html">탄자니아</a></li>
+                  <li><a href="3_9.html">케냐</a></li>
+                  <li><a href="3_10.html">나미비아</a></li>
+                  <li><a href="3_11.html">모잠비아</a></li>
+                  <li><a href="3_12.html">레소토</a></li>
+                </ul>
+              </li>
+              <li class="dropdown"><a href="#"><span>북아메리카</span><i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="4_1.html">미국</a></li>
+                  <li><a href="4_2.html">캐나다</a></li>
+                  <li><a href="4_3.html">버뮤다</a></li>
+                  <li><a href="4_4.html">그린란드</a></li>
+                </ul>
+              </li>
+              <li class="dropdown"><a href="#"><span>남아메리카</span><i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="5_1.html">브라질</a></li>
+                  <li><a href="5_2.html">콜롬비아</a></li>
+                  <li><a href="5_3.html">아르헨티나</a></li>
+                  <li><a href="5_4.html">페루</a></li>
+                  <li><a href="5_5.html">칠레</a></li>
+                  <li><a href="5_6.html">에콰도르</a></li>
+                  <li><a href="5_7.html">우루과이</a></li>
+                  <li><a href="5_8.html">베네수엘라</a></li>
+                  <li><a href="5_9.html">볼리비아</a></li>
+                </ul>
+              </li>
+              <li class="dropdown"><a href="#"><span>오세아니아</span><i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="6_1.html">호주</a></li>
+                  <li><a href="6_2.html">뉴질랜드</a></li>
+                  <li><a href="6_3.html">괌</a></li>
+                  <li><a href="6_4.html">파푸아뉴기니</a></li>
+                  <li><a href="6_5.html">투발루</a></li>
+                  <li><a href="6_6.html">보라보라</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+
+<main id="main">
+    
+  <section class="random">
+
+
+        <div class="roulette-container">
+            <canvas id="canvas" width="500" height="500"></canvas>
+            <div class="pointer"></div>
+        </div>
+        <div class="controls">
+            <button id="spin">원판 돌리기</button>
+        </div>
+        <div class="section-buttons" id="main-buttons">
+            <button onclick="selectMainSection('season')">계절별</button>
+            <button onclick="selectMainSection('travelStyle')">여행 스타일</button>
+            <button onclick="selectMainSection('companions')">동행인</button>
+        </div>
+        <div class="section-buttons" id="sub-buttons" style="display: none;">
+            <button onclick="selectSeason('봄')">봄</button>
+            <button onclick="selectSeason('여름')">여름</button>
+            <button onclick="selectSeason('가을')">가을</button>
+            <button onclick="selectSeason('겨울')">겨울</button>
+         
+        </div>
+
+        <div class="section-buttons" id="sub-travel-style-buttons" style="display: none;">
+            <button onclick="selectTravelStyle('배낭여행')">배낭여행</button>
+            <button onclick="selectTravelStyle('솔로여행')">솔로여행</button>
+            <button onclick="selectTravelStyle('음식여행')">음식여행</button>
+            <button onclick="selectTravelStyle('배낭여행')">럭셔리여행</button>
+            <button onclick="selectTravelStyle('솔로여행')">문화탐방여행</button>
+            <button onclick="selectTravelStyle('음식여행')">자연탐방여행</button>
+          
+
+        </div>
+
+        <div class="section-buttons" id="sub-companions-buttons" style="display: none;">
+            <button onclick="selectCompanionType('아이동반여행')">아이동반여행</button>
+            <button onclick="selectCompanionType('효도여행')">효도여행</button>
+            <button onclick="selectCompanionType('가족단위여행')">가족단위여행</button>
+            <button onclick="selectCompanionType('친구단위여행')">친구단위여행</button>
+           
+
+        </div>
+
+        <div class="options" id="options"></div>
+        <div class="result" id="result"> 우리의 청춘이 향하는 곳은 !  </div>
+        <script>
+            let options = [];
+            let arc;
+            let startAngle = 0;
+            let spinTimeout = null;
+        
+            let spinArcStart = 10;
+            let spinTime = 0;
+            let spinTimeTotal = 0;
+        
+            let ctx;
+        
+            const wheel = document.getElementById('canvas');
+            const resultContainer = document.getElementById('result');
+            const mainButtons = document.getElementById('main-buttons');
+            const subButtons = document.getElementById('sub-buttons');
+            const subTravelStyleButtons = document.getElementById('sub-travel-style-buttons');
+            const subCompanionsButtons = document.getElementById('sub-companions-buttons');
+            let currentMainSection = '';
+            let currentSeason = '';
+            let currentTravelStyle = '';
+            let currentCompanionType = '';
+        
+            const sections = {
+                season: {
+                    봄: ["경주", "제주도", "하동", "진해", "부산", "안동", "일본 교토", "네덜란드 큐켄호프", "프랑스 파리", "이탈리아 토스카나", "체코 프라하", "중국 상하이"],
+                    여름: ["여수", "통영", "울진", "속초", "가평", "태안", "미국 하와이", "그리스 산토리니", "태국 푸켓", "호주 시드니", "베트남 푸꾸옥 섬", "필리핀 세부"],
+                    가을: ["단양", "내장산", "설악산", "서울 남산", "속리산", "지리산", "이탈리아 베네치아", "독일 베를린", "캐나다 토론토", "헝가리 부다페스트", "폴란드 크라쿠프", "오스트리아 빈"],
+                    겨울: ["평창", "강릉", "제주도", "양양", "춘천", "고성", "핀란드 헬싱키", "아이슬란드 레이캬비크", "요르단 페트라", "일본 후쿠오카", "프랑스 베르비에", "미국 샌프란시스코"]
+                },
+
+                travelStyle: {
+                    배낭여행: ["서울특별시","제주특별자치도","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","태국","페루","뉴질랜드","아르헨티나","나미비아","일본","그리스","코스타리카","아이슬란드"],
+                    솔로여행: ["경주","가평","제주도","강릉","부산","전주","여수","거제도","양양","일본 도쿄","뉴질랜드 남섬","스페인 바르셀로나","캐나다 밴쿠버","독일 베를린","체코 프라하","태국 방콕","아랍에미리트 두바이","네덜란드 헤르난","스웨덴 스톡홀름"],
+                    음식여행: ["제주도","부산","전주","강릉","경주","여수","가평","남해","춘천","일본 도쿄","프랑스 파리","태국 방콕","포르투갈 리스본","중국 상하이","이탈리아 로마","브라질 상파울로","태국 푸켓","인도네시아 발리"],
+                    럭셔리여행: ["시그니엘 서울","제주 신라 호텔","부산 파라다이스 호텔","여수 히든베이 호텔","경주 힐튼 호텔","강릉 씨마크 호텔","남해 아난티 리조트","서울 포시즌스 호텔","제주 해비치 호텔","인천 파라다이스 시티","대구 인터불고 호텔","평창 알펜시아 리조트","몰디브 오버워터 빌라","모리셔스 빌라 리조트","바리 빌라 리조트","산토리니 클리프 호텔","프랑스 샤레 드 샤름","두바이 버즈 알 아랍","뉴욕 플라자 호텔","마우이 트라버스 호텔","싱가포르 마리나 베이 샌즈","이탈리아 호텔 데 베르니니","모나코 호텔 드 파리","도쿄 팰리스 호텔 도쿄"],
+                    문화탐방여행: ["경주","서울-경복궁","안동-하회마을","전주-한옥마을","수원-화성","부산-감천문화마을","인천-차이나타운","제주-성산일출봉","강릉-오죽헌","전북 고창-고인돌 유적지","충남 부여-백제문화단지","경기 양평-두물머리","이탈리아 로마","일본 교토","터키 이스탄불","이집트 카이로","모로코 페스","프랑스 파리","중국 베이징","그리스 아테네","멕시코 멕시코시티","요르단 페트라","이탈리아 피렌체","인도 바라나시"],
+                    자연탐방여행: ["설악산 국립공원","한라산 국립공원","지리산 국립공원","태백산 국립공원","속리산 국립공원","내장산 국립공원","덕유산 국립공원","치악산 국립공원","가야산 국립공원","오대산 국립공원","한려해상 국립공원","다도해해상 국립공원","미국-그랜드 캐니언","미국-요세미티 국립공원","크로아티아-플리트비체 호수 국립공원","뉴질랜드-피오르드랜드 국립공원","러시아-바이칼 호수","브라질-아마존 열대우림","에콰도르-갈라파고스 제도","케냐-사파리","볼리비아-살라르 데 우유니","아르헨티나-파타고니아","노르웨이-노르웨이 피오르드","호주-그레이트 배리어 리프"]
+                },
+                companions: {
+                    아이동반여행: ["에버랜드","경주","양평","부산","여수","남해","제주도","춘천","서울","캐나다","태국","미국","덴마크","호주 ","스페인","뉴질랜드","영국","핀란드"],
+                    효도여행: ["경주","제주도","강릉","남해","부산","전주","속초","안동","여수","일본 교토","타이완 타이베이","태국 치앙마이","베트남 하노이","스위스 인터라켄","이탈리아 로마","호주 시드니","프랑스 파리","캐나다 밴프"],
+                    가족단위여행: ["서울","제주도","경주","부산","속초","전주","가평","태안","여수","뉴질랜드 퀸스타운","싱가포르","영국 런던","캐나다 밴쿠버","호주 시드니","이탈리아 로마","미국 올랜도","프랑스 파리","일본 도쿄"],
+                    친구단위여행: ["서울","부산","제주도","경주","전주","강릉","여수","속초","대구","일본 도쿄","프랑스 파리","미국 뉴욕","스페인 바르셀로나","호주 시드니","태국 방콕","이탈리아","남아프리카공화국","브라질"]
+                    
+                }
+            };
+        
+            function byte2Hex(n) {
+                const nybHexString = "0123456789ABCDEF";
+                return String(nybHexString.substr((n >> 4) & 0x0F, 1)) + nybHexString.substr(n & 0x0F, 1);
+            }
+        
+            function RGB2Color(r, g, b) {
+                return '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
+            }
+        
+            function getColor(item, maxitem) {
+                const phase = 0;
+                const center = 128;
+                const width = 127;
+                const frequency = Math.PI * 2 / maxitem;
+        
+                const red = Math.sin(frequency * item + 2 + phase) * width + center;
+                const green = Math.sin(frequency * item + 0 + phase) * width + center;
+                const blue = Math.sin(frequency * item + 4 + phase) * width + center;
+        
+                return RGB2Color(red, green, blue);
+            }
+        
+            function drawRouletteWheel() {
+                const canvas = document.getElementById("canvas");
+                if (canvas.getContext) {
+                    const outsideRadius = 200;
+                    const textRadius = 160;
+                    const insideRadius = 125;
+        
+                    ctx = canvas.getContext("2d");
+                    ctx.clearRect(0, 0, 500, 500);
+        
+                    ctx.strokeStyle = "black";
+                    ctx.lineWidth = 2;
+        
+                    ctx.font = 'bold 12px Helvetica, Arial';
+        
+                    for (let i = 0; i < options.length; i++) {
+                        const angle = startAngle + i * arc;
+                        ctx.fillStyle = getColor(i, options.length);
+        
+                        ctx.beginPath();
+                        ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
+                        ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
+                        ctx.stroke();
+                        ctx.fill();
+        
+                        ctx.save();
+                        ctx.fillStyle = "black";
+                        ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius,
+                                      250 + Math.sin(angle + arc / 2) * textRadius);
+                        ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                        const text = options[i];
+                        ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                        ctx.restore();
+                    }
+        
+                    ctx.fillStyle = "red";
+                    ctx.beginPath();
+                    ctx.moveTo(250 - 8, 250 - (outsideRadius + 10));
+                    ctx.lineTo(250 + 8, 250 - (outsideRadius + 10));
+                    ctx.lineTo(250 + 8, 250 - (outsideRadius - 10));
+                    ctx.lineTo(250 + 18, 250 - (outsideRadius - 10));
+                    ctx.lineTo(250 + 0, 250 - (outsideRadius - 26));
+                    ctx.lineTo(250 - 18, 250 - (outsideRadius - 10));
+                    ctx.lineTo(250 - 8, 250 - (outsideRadius - 10));
+                    ctx.lineTo(250 - 8, 250 - (outsideRadius + 10));
+                    ctx.fill();
+            }
+          }
+        
+            function rotateWheel() {
+                spinAngleStart = Math.random() * 10 + 10;
+                spinTime = 0;
+                spinTimeTotal = Math.random() * 3 + 4 * 1000;
+                rotateAnimation();
+            }
+        
+            function rotateAnimation() {
+                spinTime += 30;
+                if (spinTime >= spinTimeTotal) {
+                    stopRotateWheel();
+                    return;
+                }
+                const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+                startAngle += (spinAngle * Math.PI / 180);
+                drawRouletteWheel();
+                spinTimeout = setTimeout('rotateAnimation()', 30);
+            }
+        
+            function stopRotateWheel() {
+                clearTimeout(spinTimeout);
+                const degrees = startAngle * 180 / Math.PI + 90;
+                const arcd = arc * 180 / Math.PI;
+                const index = Math.floor((360 - degrees % 360) / arcd);
+                ctx.save();
+                ctx.font = 'bold 30px Helvetica, Arial';
+                const text = options[index];
+                resultContainer.innerText = `우리의 청춘이 향하는 곳은 !  ${text}`;
+                ctx.restore();
+            }
+        
+            function easeOut(t, b, c, d) {
+                const ts = (t /= d) * t;
+                const tc = ts * t;
+                return b + c * (tc + -3 * ts + 3 * t);
+            }
+        
+            function selectMainSection(section) {
+                currentMainSection = section;
+                mainButtons.style.display = 'none';
+                if (section === 'season') {
+                    subButtons.style.display = 'flex';
+                } else if (section === 'travelStyle') {
+                    subTravelStyleButtons.style.display = 'flex';
+                } else if (section === 'companions') {
+                    subCompanionsButtons.style.display = 'flex';
+                }
+            }
+        
+            function selectSeason(season) {
+                currentSeason = season;
+                options = sections.season[season];
+                arc = Math.PI / (options.length / 2);
+                subButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+                drawRouletteWheel();
+            }
+        
+            function selectTravelStyle(style) {
+                currentTravelStyle = style;
+                options = sections.travelStyle[style];
+                arc = Math.PI / (options.length / 2);
+                subTravelStyleButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+                drawRouletteWheel();
+            }
+        
+            function selectCompanionType(type) {
+                currentCompanionType = type;
+                options = sections.companions[type];
+                arc = Math.PI / (options.length / 2);
+                subCompanionsButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+                drawRouletteWheel();
+            }
+        
+          
+        
+        
+            document.getElementById('spin').addEventListener('click', rotateWheel);
+        
+        
+    
+            function selectMainSection(section) {
+                currentMainSection = section;
+                mainButtons.style.display = 'none';
+                if (section === 'season') {
+                    subButtons.style.display = 'flex';
+                } else if (section === 'travelStyle') {
+                    subTravelStyleButtons.style.display = 'flex';
+                } else if (section === 'companions') {
+                    subCompanionsButtons.style.display = 'flex';
+                }
+            }
+        
+            function selectSeason(season) {
+                currentSeason = season;
+                options = sections.season[season];
+                arc = Math.PI / (options.length / 2);
+                subButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+                drawRouletteWheel();
+            }
+        
+            function selectTravelStyle(style) {
+                currentTravelStyle = style;
+                options = sections.travelStyle[style];
+                arc = Math.PI / (options.length / 2);
+                subTravelStyleButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+                drawRouletteWheel();
+            }
+        
+            function selectCompanionType(type) {
+                currentCompanionType = type;
+                options = sections.companions[type];
+                arc = Math.PI / (options.length / 2);
+                subCompanionsButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+                drawRouletteWheel();
+            }
+        
+            function goBack() {
+                subButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+            }
+        
+            function goBackFromTravelStyle() {
+                subTravelStyleButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+            }
+        
+            function goBackFromCompanionType() {
+                subCompanionsButtons.style.display = 'none';
+                mainButtons.style.display = 'flex';
+            }
+        
+            document.getElementById('spin').addEventListener('click', rotateWheel);
+        
+            document.getElementById('season-spring').addEventListener('click', () => selectSeason('봄'));
+            document.getElementById('season-summer').addEventListener('click', () => selectSeason('여름'));
+            document.getElementById('season-autumn').addEventListener('click', () => selectSeason('가을'));
+            document.getElementById('season-winter').addEventListener('click', () => selectSeason('겨울'));
+        
+            document.getElementById('travelStyle-backpacking').addEventListener('click', () => selectTravelStyle('배낭여행'));
+            document.getElementById('travelStyle-solo').addEventListener('click', () => selectTravelStyle('솔로여행'));
+            document.getElementById('travelStyle-food').addEventListener('click', () => selectTravelStyle('음식여행'));
+        
+            document.getElementById('companions-solo').addEventListener('click', () => selectCompanionType('Solo'));
+            document.getElementById('companions-couple').addEventListener('click', () => selectCompanionType('Couple'));
+            document.getElementById('companions-family').addEventListener('click', () => selectCompanionType('Family'));
+            document.getElementById('companions-friends').addEventListener('click', () => selectCompanionType('Friends'));
+            document.getElementById('companions-pet').addEventListener('click', () => selectCompanionType('Pet'));
+            document.getElementById('companions-group').addEventListener('click', () => selectCompanionType('Group'));
+        
+            document.getElementById('back').addEventListener('click', goBack);
+            document.getElementById('backFromTravelStyle').addEventListener('click', goBackFromTravelStyle);
+            document.getElementById('backFromCompanionType').addEventListener('click', goBackFromCompanionType);
+        
+            drawRouletteWheel();
+        </script>
+  </section>
+</main>
+     <!-- ======= Footer ======= -->
+  <footer id="footer" style="width:100%;" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">홈</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="about.html">여행 준비</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="korea.html">여행지 가이드</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="portfolio.html">추천</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="blog.html">콘텐츠</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              중앙대학교 다빈치 캠퍼스 <br>
+              경기도 안성시 대덕면<br>
+              예술공학과 <br><br>
+              <strong>Phone:</strong> +82 1234-1234<br>
+              <strong>Email:</strong> metaphor@cau.ac.kr<br>
+            </p>
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3>About Metaphor</h3>
+            <p>여행지 선택에 어려움을 겪는 사람들을 위한 여행 가이드 사이트
+              <br>
+              <br>
+              선택 불가 증후군으로 인해 여행지를 쉽게 결정 못하는 사람들을 위한 웹 사이트
+            </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Metaphor</span></strong>. Youth is a travel.
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
