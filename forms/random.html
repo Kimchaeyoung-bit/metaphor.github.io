@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Travel Roulette</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .roulette-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 5px solid #333;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: white;
+        }
+        .wheel {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 5s ease-out;
+        }
+        .segment {
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            transform-origin: left;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+        .segment-label {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-origin: left;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+        .pointer {
+            width: 0; 
+            height: 0; 
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid red;
+            position: absolute;
+            top: 50%;
+            left: calc(50% - 20px);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .controls button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+        .controls button:hover {
+            background-color: #555;
+        }
+        .options input {
+            margin: 5px 0;
+            padding: 5px;
+            width: calc(100% - 12px);
+        }
+        .section-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .section-buttons button {
+            padding: 10px 15px;
+            margin: 0 5px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .section-buttons button:hover {
+            background-color: #777;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="roulette-container">
+        <div class="wheel" id="wheel"></div>
+        <div class="pointer"></div>
+    </div>
+    <div class="controls">
+        <button onclick="spin()">원판 돌리기</button>
+    </div>
+    <div class="section-buttons" id="main-buttons">
+        <button onclick="selectMainSection('season')">계절별</button>
+        <button onclick="selectMainSection('travelStyle')">여행 스타일</button>
+        <button onclick="selectMainSection('companions')">동행인</button>
+    </div>
+    <div class="section-buttons" id="sub-buttons" style="display: none;">
+        <button onclick="selectSeason('봄')">봄</button>
+        <button onclick="selectSeason('여름')">여름</button>
+        <button onclick="selectSeason('가을')">가을</button>
+        <button onclick="selectSeason('겨울')">겨울</button>
+        <button onclick="goBack()">뒤로</button>
+    </div>
+
+    <div class="section-buttons" id="sub-travel-style-buttons" style="display: none;">
+        <button onclick="selectTravelStyle('배낭여행')">배낭여행</button>
+        <button onclick="selectTravelStyle('솔로여행')">솔로여행</button>
+        <button onclick="selectTravelStyle('음식여행')">음식여행</button>
+        <button onclick="goBackFromTravelStyle()">뒤로</button>
+    </div>
+
+    <div class="section-buttons" id="sub-companions-buttons" style="display: none;">
+        <button onclick="selectCompanionType('친구여행')">친구여행</button>
+        <button onclick="selectCompanionType('효도여행')">효도여행</button>
+        <button onclick="selectCompanionType('가족여행')">가족여행</button>
+        <button onclick="goBackFromCompanionType()">뒤로</button>
+    </div>
+
+    <div class="options" id="options"></div>
+    <div class="result" id="result">우리의 청춘이 향하는 곳은: </div>
+
+    <script>
+        const wheel = document.getElementById('wheel');
+        const optionsContainer = document.getElementById('options');
+        const resultContainer = document.getElementById('result');
+        const mainButtons = document.getElementById('main-buttons');
+        const subButtons = document.getElementById('sub-buttons');
+        const subTravelStyleButtons = document.getElementById('sub-travel-style-buttons');
+        const subCompanionsButtons = document.getElementById('sub-companions-buttons');
+        let optionCount = 6;
+        let currentMainSection = 'season';
+        let currentSeason = '';
+        let currentTravelStyle = '';
+        let currentCompanionType = '';
+        let options = [];
+
+        const sections = {
+            season: {
+                봄: ["경주", "제주도", "하동", "진해", "부산", "안동", "일본 교토", "네덜란드 큐켄호프", "프랑스 파리", "이탈리아 토스카나", "체코 프라하", "중국 상하이"],
+                여름: ["여수", "통영", "울진", "속초", "가평", "태안", "미국 하와이", "그리스 산토리니", "태국 푸켓", "호주 시드니", "베트남 푸꾸옥 섬", "필리핀 세부"],
+                가을: ["단양", "내장산", "설악산", "서울 남산", "속리산", "지리산", "이탈리아 베네치아", "독일 베를린", "캐나다 토론토", "헝가리 부다페스트", "폴란드 크라쿠프", "오스트리아 빈"],
+                겨울: ["평창", "강릉", "제주도", "양양", "춘천", "고성", "핀란드 헬싱키", "아이슬란드 레이캬비크", "요르단 페트라", "일본 후쿠오카", "프랑스 베르비에", "미국 샌프란시스코"]
+            },
+
+            travelStyle: {
+                배낭여행: ["서울특별시","제주특별자치도","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","태국","페루","뉴질랜드","아르헨티나","나미비아","일본","그리스","코스타리카","아이슬란드"],
+                솔로여행: ["경주","가평","제주도","강릉","부산","전주","여수","거제도","양양","일본 도쿄","뉴질랜드 남섬","스페인 바르셀로나","캐나다 밴쿠버","독일 베를린","체코 프라하","태국 방콕","아랍에미리트 두바이","네덜란드 헤르난","스웨덴 스톡홀름"],
+                음식여행: ["제주도","부산","전주","강릉","경주","여수","가평","남해","춘천","일본 도쿄","프랑스 파리","태국 방콕","포르투갈 리스본","중국 상하이","이탈리아 로마","브라질 상파울로","태국 푸켓","인도네시아 발리"],
+                럭셔리여행: ["시그니엘 서울","제주 신라 호텔","부산 파라다이스 호텔","여수 히든베이 호텔","경주 힐튼 호텔","강릉 씨마크 호텔","남해 아난티 리조트","서울 포시즌스 호텔","제주 해비치 호텔","인천 파라다이스 시티","대구 인터불고 호텔","평창 알펜시아 리조트","몰디브 오버워터 빌라","모리셔스 빌라 리조트","바리 빌라 리조트","산토리니 클리프 호텔","프랑스 샤레 드 샤름","두바이 버즈 알 아랍","뉴욕 플라자 호텔","마우이 트라버스 호텔","싱가포르 마리나 베이 샌즈","이탈리아 호텔 데 베르니니","모나코 호텔 드 파리","도쿄 팰리스 호텔 도쿄"],
+                문화탐방여행: ["경주","서울-경복궁","안동-하회마을","전주-한옥마을","수원-화성","부산-감천문화마을","인천-차이나타운","제주-성산일출봉","강릉-오죽헌","전북 고창-고인돌 유적지","충남 부여-백제문화단지","경기 양평-두물머리","이탈리아 로마","일본 교토","터키 이스탄불","이집트 카이로","모로코 페스","프랑스 파리","중국 베이징","그리스 아테네","멕시코 멕시코시티","요르단 페트라","이탈리아 피렌체","인도 바라나시"],
+                자연탐방여행: ["설악산 국립공원","한라산 국립공원","지리산 국립공원","태백산 국립공원","속리산 국립공원","내장산 국립공원","덕유산 국립공원","치악산 국립공원","가야산 국립공원","오대산 국립공원","한려해상 국립공원","다도해해상 국립공원","미국-그랜드 캐니언","미국-요세미티 국립공원","크로아티아-플리트비체 호수 국립공원","뉴질랜드-피오르드랜드 국립공원","러시아-바이칼 호수","브라질-아마존 열대우림","에콰도르-갈라파고스 제도","케냐-사파리","볼리비아-살라르 데 우유니","아르헨티나-파타고니아","노르웨이-노르웨이 피오르드","호주-그레이트 배리어 리프"]
+            },
+            companions: {
+                아이동반여행: ["에버랜드","경주","양평","부산","여수","남해","제주도","춘천","서울 소곡동","캐나다 밴프 국립공원","태국 푸켓 판와 케이프","미국 플로리다 월트 디즈니 월드","덴마크 코펜하겐 티볼리 가든","호주 시드니 타롱가 동물원","스페인 바르셀로나 파르크 구엘","뉴질랜드 로토루아","영국 런던 해리포터 스튜디오 투어","핀란드 로바니에미 산타 마을"],
+                효도여행: ["2","3","4","5","6","7","8","9"],
+                가족단위여행: ["서울","제주도","경주","부산","속초","전주","가평","태안","여수","뉴질랜드 퀸스타운","싱가포르","영국 런던","캐나다 밴쿠버","호주 시드니","이탈리아 로마","미국 올랜도","프랑스 파리","일본 도쿄"],
+                친구단위여행: ["서울","부산","제주도","경주","전주","강릉","여수","속초","대구","일본 도쿄","프랑스 파리","미국 뉴욕","스페인 바르셀로나","호주 시드니","태국 방콕","이탈리아 로마","남아프리카공화국 케이프타운","브라질 리우데자네이루"]
+                
+            }
+        };
+
+        
+        function drawWheel() {
+            wheel.innerHTML = '';
+            const arc = 360 / optionCount;
+            for (let i = 0; i < optionCount; i++) {
+                const segment = document.createElement('div');
+                segment.className = 'segment';
+                segment.style.transform = `rotate(${i * arc}deg)`;
+                segment.style.backgroundColor = colors[i % colors.length];
+                
+                const label = document.createElement('div');
+                label.className = 'segment-label';
+                label.style.transform = `rotate(${arc / 2}deg) translateX(50%)`;
+                label.innerText = options[i];
+                
+                segment.appendChild(label);
+                wheel.appendChild(segment);
+            }
+        }
+        function selectMainSection(section) {
+            currentMainSection = section;
+            clearOptions();
+            showSubButtons(section);
+        }
+
+        function selectSeason(season) {
+            currentSeason = season;
+            options = sections.season[season];
+            updateOptions();
+        }
+
+        function selectTravelStyle(travelStyle) {
+            currentTravelStyle = travelStyle;
+            options = sections.travelStyle[travelStyle];
+            updateOptions();
+        }
+
+        function selectCompanionType(companionType) {
+            currentCompanionType = companionType;
+            options = sections.companions[companionType];
+            updateOptions();
+        }
+
+        function goBack() {
+            currentSeason = '';
+            currentTravelStyle = '';
+            currentCompanionType = '';
+            clearOptions();
+            showMainButtons();
+        }
+
+        function goBackFromTravelStyle() {
+            currentTravelStyle = '';
+            clearOptions();
+            showMainButtons();
+        }
+
+        function goBackFromCompanionType() {
+            currentCompanionType = '';
+            clearOptions();
+            showMainButtons();
+        }
+
+        function showSubButtons(section) {
+            mainButtons.style.display = 'none';
+            subButtons.style.display = 'none';
+            subTravelStyleButtons.style.display = 'none';
+            subCompanionsButtons.style.display = 'none';
+            
+            switch (section) {
+                case 'season':
+                    subButtons.style.display = 'flex';
+                    break;
+                case 'travelStyle':
+                    subTravelStyleButtons.style.display = 'flex';
+                    break;
+                case 'companions':
+                    subCompanionsButtons.style.display = 'flex';
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function showMainButtons() {
+            mainButtons.style.display = 'flex';
+            subButtons.style.display = 'none';
+            subTravelStyleButtons.style.display = 'none';
+            subCompanionsButtons.style.display = 'none';
+        }
+
+        function updateOptions() {
+            clearOptions();
+            options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.textContent = option;
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        function clearOptions() {
+            optionsContainer.innerHTML = '';
+        }
+
+        function spin() {
+            if (options.length > 0) {
+                const degrees = Math.floor(Math.random() * 360);
+                const selectedOption = Math.floor(Math.random() * options.length);
+                const selectedAngle = degrees + selectedOption * (360 / options.length);
+                wheel.style.transform = `rotate(${selectedAngle}deg)`;
+                resultContainer.textContent = `우리의 청춘이 향하는 곳은: ${options[selectedOption]}!`;
+            } else {
+                resultContainer.textContent = '선택할 옵션이 없습니다.';
+            }
+        }
+
+       
+    </script>
+</body>
+</html>
